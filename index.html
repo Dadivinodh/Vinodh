@@ -51,8 +51,13 @@
     <p id="message"></p>
 </div>
 
+<audio id="popup-sound" src="popup-sound.mp3"></audio>
+
 <script>
     function checkLogin() {
+        const popupSound = document.getElementById('popup-sound');
+        popupSound.play();
+
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
         const messageElement = document.getElementById('message');
