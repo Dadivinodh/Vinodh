@@ -3,183 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Camera Access</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f0f0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
         }
-        .container {
-            text-align: center;
-        }
-        h1 {
-            font-size: 3em;
-            color: #333;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-        form {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            width: 300px;
-            max-width: 100%;
-        }
-        input[type="text"], input[type="password"] {
-            width: calc(100% - 12px);
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-        .message {
-            margin-top: 20px;
-            font-size: 1.2em;
-            color: #333;
-        }
-        .link {
-            margin-top: 10px;
-            display: none;
-        }
-        .link a {
-            display: inline-block;
-            padding: 12px 24px;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .link a:hover {
-            background-color: #45a049;
-        }
-        /* Toast Styles */
-        #toast {
-            visibility: hidden;
-            min-width: 250px;
-            margin-left: -125px;
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            border-radius: 2px;
-            padding: 16px;
-            position: fixed;
-            z-index: 1;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 17px;
-        }
-        #toast.show {
-            visibility: visible;
-            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
-        }
-        @-webkit-keyframes fadein {
-            from {top: 0; opacity: 0;}
-            to {top: 50%; opacity: 1;}
-        }
-        @keyframes fadein {
-            from {top: 0; opacity: 0;}
-            to {top: 50%; opacity: 1;}
-        }
-        @-webkit-keyframes fadeout {
-            from {top: 50%; opacity: 1;}
-            to {top: 0; opacity: 0;}
-        }
-        @keyframes fadeout {
-            from {top: 50%; opacity: 1;}
-            to {top: 0; opacity: 0;}
-        }
-        /* Button Styles */
-        .popup-button {
-            background-color: #007BFF;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: background-color 0.3s ease;
-        }
-        .popup-button:hover {
-            background-color: #0056b3;
+        #videoElement {
+            width: 80%;
+            max-width: 600px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Login</h1>
-        <form id="loginForm">
-            <input type="text" id="username" name="username" placeholder="Username" required>
-            <br>
-            <input type="password" id="password" name="password" placeholder="Password" required>
-            <br>
-            <input type="submit" value="Login">
-        </form>
-        <div class="message" id="message"></div>
-        <div class="link" id="link">
-            <a href="vinodh.html" target="_blank">Go to Vinodh Page</a>
-        </div>
-        <button class="popup-button" onclick="playSound()">Play Sound</button>
-    </div>
 
-    <!-- Toast Message -->
-    <div id="toast">Who the fuck are you?</div>
+<video id="videoElement" autoplay></video>
 
-    <!-- Audio Element -->
-    <audio id="popupSound" src="popup-sound.mp3" preload="auto"></audio>
+<script>
+    const video = document.getElementById('videoElement');
 
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent form submission
-
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            if (username === 'dadi' && password === 'dadi') {
-                document.getElementById('message').textContent = 'Good Morning';
-                document.getElementById('link').style.display = 'block';
-            } else {
-                document.getElementById('message').textContent = 'Invalid username or password';
-                document.getElementById('link').style.display = 'none';
-                showToast();
-                playSound();
-            }
+    // Request access to the user's camera
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
+            video.srcObject = stream;
+        })
+        .catch((err) => {
+            console.error("Error accessing the camera: ", err);
         });
+</script>
 
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.className = 'show';
-            setTimeout(() => {
-                toast.className = toast.className.replace('show', '');
-            }, 3000);
-        }
-
-        function playSound() {
-            const sound = document.getElementById('popupSound');
-            sound.play();
-        }
-    </script>
 </body>
 </html>
