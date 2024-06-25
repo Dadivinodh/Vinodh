@@ -54,17 +54,17 @@
 <audio id="popup-sound" src="popup-sound.mp3"></audio>
 
 <script>
-    let loginAttempts = 0;
-    const maxAttempts = 3;
+    const key = 3; // Encryption key
+    const validUsernameHash = simpleHash('dadi', key);
+    const validPasswordHash = simpleHash('dadi', key);
 
-    function hash(input) {
-        let hash = 0, i, chr;
-        for (i = 0; i < input.length; i++) {
-            chr = input.charCodeAt(i);
-            hash = ((hash << 5) - hash) + chr;
+    function simpleHash(input, key) {
+        let hash = 0;
+        for (let i = 0; i < input.length; i++) {
+            hash = (hash << 5) - hash + input.charCodeAt(i) + key;
             hash |= 0; // Convert to 32bit integer
         }
-        return hash;
+        return hash.toString(16); // Convert to hex string
     }
 
     function checkLogin() {
@@ -72,25 +72,15 @@
         const password = document.getElementById('password').value.trim();
         const messageElement = document.getElementById('message');
         const popupSound = document.getElementById('popup-sound');
-        
-        if (loginAttempts >= maxAttempts) {
-            messageElement.textContent = 'Too many failed attempts. Please try again later.';
-            messageElement.style.color = 'red';
-            return;
-        }
 
-        const hashedUsername = hash(username);
-        const hashedPassword = hash(password);
-        
-        const validUsernameHash = hash('dadi');
-        const validPasswordHash = hash('dadi');
+        const hashedUsername = simpleHash(username, key);
+        const hashedPassword = simpleHash(password, key);
 
         if (hashedUsername === validUsernameHash && hashedPassword === validPasswordHash) {
             messageElement.textContent = 'You cracked it!';
             messageElement.style.color = 'green';
             popupSound.play();
         } else {
-            loginAttempts++;
             messageElement.textContent = 'Incorrect username or password.';
             messageElement.style.color = 'red';
         }
