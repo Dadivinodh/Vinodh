@@ -1,0 +1,97 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to bottom, #87CEEB, #FFD700); /* Sky blue to golden yellow gradient */
+    color: #333;
+    text-align: center;
+    overflow: hidden; /* Prevents scrolling */
+}
+
+#welcome-section {
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    margin: 20px auto;
+    width: 80%;
+}
+
+input {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #FF4500; /* Vibrant orange background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #FF6347; /* Tomato color on hover */
+}
+
+.forget-btn {
+    background-color: #4CAF50; /* Green background for forget button */
+}
+
+.forget-btn:hover {
+    background-color: #45a049;
+}
+
+/* Error message styling */
+.error {
+    color: red;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#tree-container {
+    position: relative;
+    margin-top: 20px; /* Less margin to bring it closer to the buttons */
+    height: 200px; /* Adjust height to fit the layout better */
+}
+
+.tree {
+    width: 150px; /* Adjust the size of the tree */
+    position: absolute;
+    bottom: 0; /* Align trees to be at the bottom of the container */
+}
+
+.bird {
+    font-size: 2rem; /* Adjust size of the bird emoji */
+    position: absolute;
+    cursor: pointer;
+    transition: transform 1s ease; /* Smooth transition for animation */
+}
+
+/* Positioning for the trees and birds */
+#tree1 {
+    left: 0; /* Position of the first tree on the left */
+}
+
+#tree2 {
+    right: 0; /* Position of the second tree on the right */
+}
+
+#bird1 {
+    left: 30px; /* Position of the first bird in the first tree */
+    bottom: 100px; /* Higher position above the first tree */
+}
+
+#bird2 {
+    right: 30px; /* Position of the second bird in the second tree */
+    bottom: 100px; /* Higher position above the second tree */
+}
