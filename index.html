@@ -3,89 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-        }
-        .login-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .login-container input {
-            display: block;
-            width: 100%;
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .login-container button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007BFF;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .login-container button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <title>Welcome to Project VD</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div id="welcome-section">
+        <h1 id="welcome-message">Welcome to Project VD</h1>
+        <p id="name-prompt">Enter your name and ID</p>
+        
+        <input type="text" id="name-input" placeholder="Enter your name">
+        <input type="text" id="id-input" placeholder="Enter your ID">
+        
+        <div class="button-container">
+            <button onclick="getDetails()">Login <i class="fas fa-arrow-right"></i></button>
+            <button class="forget-btn" onclick="redirectToWhatsApp()">Sign up </button>
+        </div>
+        
+        <!-- Error message if ID is incorrect -->
+        <p id="error-message" class="error"></p>
 
-<div class="login-container">
-    <h2>Login</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="checkLogin()">Login</button>
-    <p id="message"></p>
-</div>
+        <!-- Trees and Birds Section placed just below the buttons -->
+        <div id="tree-container">
+            <img id="tree1" class="tree" src="tree.png" alt="Tree" />
+            <div id="bird1" class="bird" onclick="animateBird('bird1')" style="left: 30px; bottom: 100px;">🕊️</div> <!-- Bird 1 -->
+            <img id="tree2" class="tree" src="tree.png" alt="Tree" />
+            <div id="bird2" class="bird" onclick="animateBird('bird2')" style="right: 30px; bottom: 100px;">🐦</div> <!-- Bird 2 -->
+        </div>
+    </div>
 
-<audio id="popup-sound" src="popup-sound.mp3"></audio>
-
-<script>
-    const key = 3; // Encryption key
-    const validUsernameHash = simpleHash('dadi', key);
-    const validPasswordHash = simpleHash('dadi', key);
-
-    function simpleHash(input, key) {
-        let hash = 0;
-        for (let i = 0; i < input.length; i++) {
-            hash = (hash << 5) - hash + input.charCodeAt(i) + key;
-            hash |= 0; // Convert to 32bit integer
-        }
-        return hash.toString(16); // Convert to hex string
-    }
-
-    function checkLogin() {
-        const username = document.getElementById('username').value.trim();
-        const password = document.getElementById('password').value.trim();
-        const messageElement = document.getElementById('message');
-        const popupSound = document.getElementById('popup-sound');
-
-        const hashedUsername = simpleHash(username, key);
-        const hashedPassword = simpleHash(password, key);
-
-        if (hashedUsername === validUsernameHash && hashedPassword === validPasswordHash) {
-            messageElement.textContent = 'You cracked it!';
-            messageElement.style.color = 'green';
-            popupSound.play();
-        } else {
-            messageElement.textContent = 'Incorrect username or password.';
-            messageElement.style.color = 'red';
-        }
-    }
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
